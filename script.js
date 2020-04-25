@@ -1,3 +1,4 @@
+
 /* global L */
 
 //var map = L.map('map').setView([28.2156279,2.9081565], 5.5);
@@ -6,7 +7,7 @@ var map = L.map("map", {
   zoomSnap: 0.25,
   zoom: 5.35
 });
-
+var loader = L.control.loader().addTo(map);
 L.tileLayer(
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
   {
@@ -53,14 +54,16 @@ info.update = function(props) {
 
 info.addTo(map);
 
-fetch(
-  "https://cdn.glitch.com/a5b929f5-fe5d-426d-a329-766e45b8c268%2FgeoData.geojson?v=1583341026527"
-)
-  .then(function(response) {
+const fetchPromise=fetch(//try using promises
+  "https://cdn.glitch.com/530d4538-1d83-43db-85d2-e429e2faa151%2FgeoData.geojson?v=1587484387336"
+);
+
+fetchPromise.then(function(response) {
     return response.json();
   })
   .then(function(json) {
     // this is where we do things with data
+  loader.hide();
     doThingsWithData(json);
   });
 
